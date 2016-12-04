@@ -79,6 +79,15 @@ RSpec.describe 'binaries' do
         expect(errors.length).to eq 1
         expect(errors[0]).to match /asdf/
       end
+
+      it 'passes the config, parsed from the arguments, down to the lib' do
+        ruby_stdout, ruby_stderr, ruby_status = Open3.capture3 'hylite -l ruby', stdin_data: '1+1'
+        css_stdout,  css_stderr,  css_status  = Open3.capture3 'hylite -l css', stdin_data: '1+1'
+
+        expect(ruby_stderr).to     eq css_stderr
+        expect(ruby_status).to     eq css_status
+        expect(ruby_stdout).to_not eq css_stdout
+      end
     end
   end
 

@@ -36,9 +36,8 @@ class Hylite
     def ensure_evaluated
       return if @evaluated
       @evaluated = true
-      @success = true
-      # TODO: Nothing verifies that this passes the config
-      @result = Hylite.call(code.read, config)
+      @success   = true
+      @result    = Hylite.call(code.read, config)
     end
 
     def parse(args)
