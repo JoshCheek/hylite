@@ -66,6 +66,12 @@ RSpec.describe 'binaries' do
           expect(errors.length).to eq 1
           expect(errors[0]).to match /language/
         end
+
+        it 'highlights according to the provided language' do
+          ruby = Hylite.call '1', lang: 'ruby'
+          css  = Hylite.call '1', lang: 'css'
+          expect(ruby).to_not eq css
+        end
       end
 
       it 'sets an error if it sees an arg it doesn\'t understand' do

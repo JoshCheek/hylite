@@ -37,8 +37,8 @@ class Hylite
       return if @evaluated
       @evaluated = true
       @success = true
-      # TODO: Nothing verifies that this passes the correct language?
-      @result = Hylite.call(code.read)
+      # TODO: Nothing verifies that this passes the config
+      @result = Hylite.call(code.read, config)
     end
 
     def parse(args)

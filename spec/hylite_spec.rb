@@ -13,8 +13,9 @@ RSpec.describe 'hylite' do
 
 
   it 'defaults the language to Ruby' do
-    h = Hylite.new ''
-    expect(h.lang).to eq 'ruby'
+    expect(Hylite.new(''          ).lang).to     eq 'ruby'
+    expect(Hylite.new('', l:   nil).lang).to     eq 'ruby'
+    expect(Hylite.new('', l: 'css').lang).to_not eq 'ruby'
   end
 
 
