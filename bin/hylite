@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
-puts "hi"
+
+require 'coderay'
+puts CodeRay.encode $stdin.read, :ruby, :terminal
