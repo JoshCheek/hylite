@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+$stderr.puts "Use the `hylite` binary (`#{$PROGRAM_NAME}` exists for discoverability)"
+load File.join(__dir__, 'hylite')
