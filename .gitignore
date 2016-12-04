@@ -1,0 +1,2 @@
+# don't commit the lock deps on gems, it should work for any versions that satisfy the Gemfile
+Gemfile.lock

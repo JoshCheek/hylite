@@ -3,7 +3,7 @@ Hylite
 
 Syntax Highlighting for scripters.
 
-It has a simple binary-interface and shell-interface that tries to find a
+It has a simple binary-interface and Ruby interface that tries to find a
 syntax highlighting tool on your machine and then highlight your code using that tool.
 
 If you're not scripting, you'll want to use one of the libraries this tool wraps:
@@ -26,27 +26,26 @@ $ cat my_code.c | hylite --lang c
 ```
 
 
+Development
+-----------
+
+Assuming a working Ruby development environment (try [chruby](https://github.com/postmodern/chruby) if you don't have one).
+
+```sh
+# Install Bundler for dependency management, if you don't already have it
+$ gem install bundler
+
+# Tell bundler to install the dev dependencies
+$ bundle install
+
+# Run the tests
+$ mrspec
+```
+
+
 License
 -------
 
 [WTFPL](http://www.wtfpl.net/about/), Just do what the fuck you want to.
 
 NO WARRANTY.
-
-
----------
-
-pygmentize
-
-coderay
-  require 'coderay'
-  CodeRay.encode code, :ruby, :terminal
-
-rouge
-  require 'rouge'
-  formatter = Rouge::Formatters::Terminal256.new theme: 'colorful'
-  lexer     = Rouge::Lexers::Ruby.new
-  tokens    = lexer.lex raw_code
-  formatter.format(tokens)
-
-ultraviolet
