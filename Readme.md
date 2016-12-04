@@ -21,10 +21,6 @@ Interface
 # Simplest interface
 $ cat my_code.rb | hylite
 
-# Tell it whether your theme is dark or light
-$ cat my_code.rb | hylite --dark
-$ cat my_code.rb | hylite --light
-
 # Highlight other languages
 $ cat my_code.c | hylite --lang c
 ```
