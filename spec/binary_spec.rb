@@ -35,7 +35,7 @@ RSpec.describe 'binaries' do
 
       def assert_parses(argv, key, value=unset)
         cli = Hylite::CLI.new("", argv)
-        expect(cli.options[key]).to eq value unless value == unset
+        expect(cli.config[key]).to eq value unless value == unset
         value
       end
 
