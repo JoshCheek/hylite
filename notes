@@ -1,0 +1,14 @@
+pygmentize
+
+coderay
+  require 'coderay'
+  CodeRay.encode code, :ruby, :terminal
+
+rouge
+  require 'rouge'
+  formatter = Rouge::Formatters::Terminal256.new theme: 'colorful'
+  lexer     = Rouge::Lexers::Ruby.new
+  tokens    = lexer.lex raw_code
+  formatter.format(tokens)
+
+ultraviolet
