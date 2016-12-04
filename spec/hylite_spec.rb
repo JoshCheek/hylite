@@ -1,5 +1,6 @@
 require 'stringio'
 require 'spec_helpers'
+require 'hylite'
 
 RSpec.describe 'hylite' do
   describe 'choosing the highlighter' do
@@ -11,13 +12,13 @@ RSpec.describe 'hylite' do
   end
 
 
-  xit 'defaults the language to Ruby' do
+  it 'defaults the language to Ruby' do
     h = Hylite.new ''
     expect(h.lang).to eq 'ruby'
   end
 
 
-  xit 'can be overridden with the :l, :language, or :lmisspelled keywords' do
+  it 'can be overridden with the :l, :language, or :lmisspelled keywords' do
     h = Hylite.new '', l: 'forth'
     expect(h.lang).to eq 'forth'
 
@@ -28,10 +29,10 @@ RSpec.describe 'hylite' do
     expect(h.lang).to eq 'forth'
   end
 
-  xit 'accepts strings or streams to highlight' do
+  it 'accepts strings or streams to highlight' do
     # Based on CodeRay's formatting of "1":
-    #                 ["\e[1;34m", "1", "\e[0m", "\n"]
-    expected_tokens = [:color,     "1", :color,  "\n"]
+    #                 ["\e[1;34m", "1", "\e[0m"]
+    expected_tokens = [:color,     "1", :color]
     string          = '1'.freeze
     stream          = StringIO.new string
 

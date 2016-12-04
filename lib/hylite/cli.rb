@@ -1,3 +1,5 @@
+require 'hylite'
+
 class Hylite
   class CLI
     def initialize(code, argv)
@@ -35,8 +37,8 @@ class Hylite
       return if @evaluated
       @evaluated = true
       @success = true
-      require 'coderay'
-      @result = CodeRay.encode(code.read, :ruby, :terminal)
+      # TODO: Nothing verifies that this passes the correct language?
+      @result = Hylite.call(code.read)
     end
 
     def parse(args)
