@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'coderay'
-puts CodeRay.encode $stdin.read, :ruby, :terminal
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+require 'hylite/cli'
+
+cli = Hylite::CLI.new($stdin, ARGV)
+puts cli.result
+exit cli.status
