@@ -1,5 +1,6 @@
 require 'open3'
 require 'hylite/cli'
+require 'spec_helpers'
 
 bin_dir     = File.expand_path '../bin', __dir__
 ENV["PATH"] = bin_dir + ":" + ENV["PATH"]
@@ -13,10 +14,7 @@ RSpec.describe 'binaries' do
       # Based on CodeRay's formatting of "1+1":
       #                 ["\e[1;34m", "1", "\e[0m", "+", "\e[1;34m", "1", "\e[0m", "\n"]
       expected_tokens = [:color,     "1", :color,  "+", :color,     "1", :color,  "\n"]
-      actual_tokens   = stdout.scan(/\e.*?m|[^\e]+/).map do |token|
-        token[0] == "\e" ? :color : token
-      end
-      expect(actual_tokens).to eq expected_tokens
+      expect(highlighted_tokens stdout).to eq expected_tokens
     end
 
     context 'when it has an error' do
