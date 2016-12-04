@@ -1,4 +1,4 @@
-module Hylite
+class Hylite
   class CLI
     def initialize(code, argv)
       self.code = code
