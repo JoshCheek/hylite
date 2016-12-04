@@ -40,8 +40,23 @@ module Hylite
     end
 
     def parse(args)
-      config = {errors: [], help: false}
-      args.each { |arg| config[:errors] << "Unknown argument #{arg.inspect}" }
+      config = {errors: [], help: false, lang: nil}
+      args   = args.dup
+      while args.any?
+        arg = args.shift
+        case arg
+        when '-h', '--help'
+          config[:help] = true
+        when '-l', /^--l.*/
+          if lang = args.shift
+            config[:lang] = lang
+          else
+            config[:errors] << "Expected a language after #{arg.inspect}"
+          end
+        else
+          config[:errors] << "Unknown argument #{arg.inspect}"
+        end
+      end
       config
     end
   end
