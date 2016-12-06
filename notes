@@ -1,14 +1,63 @@
-pygmentize
+#!/usr/bin/env ruby
 
-coderay
-  require 'coderay'
-  CodeRay.encode code, :ruby, :terminal
+# Rouge
+# * cat lib/hylite.rb | time rougify highlight -l ruby
+# * slower (0.24s, sometimes 2x that)
+# * 121 languages (coderay has 31, rouge 121)
+# * Has 15 themes
 
-rouge
-  require 'rouge'
-  formatter = Rouge::Formatters::Terminal256.new theme: 'colorful'
-  lexer     = Rouge::Lexers::Ruby.new
-  tokens    = lexer.lex raw_code
-  formatter.format(tokens)
+  # require 'rouge'
+  #
+  # # See all styles (from fish)
+  # # for style in (rougify help style | tail -1 | tr -d ' ' | tr , \n); echo \n===== $style =====; rougify highlight -t $style -l ruby bin/rougify ; end
+  #
+  # # Using the lib
+  # formatter = Rouge::Formatters::Terminal256.new theme: 'colorful'
+  # lexer     = Rouge::Lexers::Ruby.new
+  # tokens    = lexer.lex raw_code
+  # formatter.format(tokens)
+  #
+  # # Number of languages
+  # Rouge::Lexer.all.length # => 113
+  #
+  # # Inferring the language (supports a mimetype, too, but not useful for this)
+  # Rouge::Lexer.guesses(filename: 'file.rb')                  # => [Rouge::Lexers::Ruby]
+  # Rouge::Lexer.guesses(filename: 'file.py')                  # => [Rouge::Lexers::Python]
+  # Rouge::Lexer.guesses(source: "#!/usr/bin/env ruby\n1+1")   # => [Rouge::Lexers::Ruby]
+  # Rouge::Lexer.guesses(source: "#!/usr/bin/env python\n1+1") # => [Rouge::Lexers::Python]
+  # Rouge::Lexer.guesses(source: "1+1")                        # => []
+  #
+  # Rouge.constants
 
-ultraviolet
+# CodeRay
+# * cat lib/hylite.rb | time coderay -ruby
+# * 3-4x faster (0.07s)
+# * 31 languages
+# * Has the nicest default theme
+# * Has only theme
+
+  # require 'coderay'
+  #
+  # # Using the lib
+  # CodeRay.encode '1+1', :ruby, :terminal # => "\e[1;34m1\e[0m+\e[1;34m1\e[0m"
+  #
+  # # Number of languages
+  # CodeRay::Scanners.list.length # => 27
+  #
+  # # Inferring language from filename (true means it should try checking the shebang)
+  # CodeRay::FileType.fetch 'somefile.zomg', :default_type, true # => :default_type
+  # CodeRay::FileType.fetch 'somefile.rb',   :default_type, true # => :ruby
+
+# Pygmentize
+# * $ cat lib/hylite.rb | time pygmentize -l ruby
+# * $ cat lib/hylite.rb | time ruby -e 'system "pygmentize -l ruby"'
+# * slow (0.18s, occasionallly 0.30s, but 0.24 when shelling out from Ruby)
+# * 402 languages (pygmentize -L lexers | ag '^\*' | wc -l)
+# * 26 themes (pygmentize -L styles | ag '^\*' | wc -l)
+
+# Vim
+# * http://superuser.com/questions/554047/export-vim-syntax-highlighting-to-output-to-shell
+# * http://www.vim.org/scripts/script.php?script_id=4325
+# * http://unix.stackexchange.com/questions/90990/less-command-and-syntax-highlighting
+
+

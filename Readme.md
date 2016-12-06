@@ -10,9 +10,13 @@ If you're not scripting, you'll want to use one of the libraries this tool wraps
 
 * [Rouge](http://rouge.jneen.net)
 * [Coderay](http://coderay.rubychan.de)
-* [Ultraviolet](https://rubygems.org/gems/ultraviolet)
 * [Pygments](http://pygments.org)
 
+Todo
+----
+
+* Possibly allow it to guess the default (eg Rouge will do this)
+* Possibly allow user to pass a filename as it's probably a nicer interface for non-Ruby
 
 Interface
 ---------

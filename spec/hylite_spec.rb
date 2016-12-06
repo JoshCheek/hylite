@@ -5,12 +5,10 @@ require 'hylite'
 RSpec.describe 'hylite' do
   describe 'choosing the highlighter' do
     it 'uses rouge if available'
-    it 'uses coderay if rouge is not available'
-    it 'uses ultraviolet if rouge and coderay are not available'
-    it 'uses pygmentize if rouge, coderay, and ultraviolet are not available'
+    it 'uses pygmentize if rouge, isn\'t available'
+    it 'uses coderay if rouge and pygmentize aren\'t available'
     it 'tells you how to install these other libs if none of them are available'
   end
-
 
   it 'defaults the language to Ruby' do
     expect(Hylite.new(''          ).lang).to     eq 'ruby'
