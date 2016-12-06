@@ -10,6 +10,7 @@
   #
   # # See all styles (from fish)
   # # for style in (rougify help style | tail -1 | tr -d ' ' | tr , \n); echo \n===== $style =====; rougify highlight -t $style -l ruby bin/rougify ; end
+  # Rouge::Theme.registry.keys
   #
   # # Using the lib
   # formatter = Rouge::Formatters::Terminal256.new theme: 'colorful'
@@ -54,10 +55,67 @@
 # * slow (0.18s, occasionallly 0.30s, but 0.24 when shelling out from Ruby)
 # * 402 languages (pygmentize -L lexers | ag '^\*' | wc -l)
 # * 26 themes (pygmentize -L styles | ag '^\*' | wc -l)
+  # $ pygmentize -L styles
+  # $ pygmentize -L formatters
 
 # Vim
 # * http://superuser.com/questions/554047/export-vim-syntax-highlighting-to-output-to-shell
 # * http://www.vim.org/scripts/script.php?script_id=4325
 # * http://unix.stackexchange.com/questions/90990/less-command-and-syntax-highlighting
 
+
+# ---------------------------------------------------------
+# How to control which libraries it can see:
+
+require 'rubygems'
+require 'open3'
+
+coderay       = Gem::Specification.find_by_name('coderay')
+coderay_paths = coderay.full_require_paths.join(":")
+
+rouge       = Gem::Specification.find_by_name('rouge')
+rouge_paths = rouge.full_require_paths.join(":")
+
+[ ['CodeRay',  ['-I', coderay_paths]],
+  ['Rouge',    ['-I', rouge_paths]],
+  ['Pygments', []],
+].each do |name, args|
+  puts "====  #{name}  ====="
+  system 'ruby', '--disable-gem', *args, '-e', <<-'RUBY'
+    which = 'pygments'
+
+    begin
+      require 'rouge'
+      which = 'rouge'
+    rescue LoadError
+      puts "\e[31mCould not load rouge\e[0m"
+    end
+
+    begin
+      require 'coderay'
+      which = 'coderay'
+    rescue LoadError
+      puts "\e[31mCould not load coderay\e[0m"
+    end
+
+    case which
+    when 'coderay'
+      puts "\e[32mUsing CodeRay\e[0m", CodeRay.encode("1+1", :ruby, :terminal)
+    when 'rouge'
+      theme     = Rouge::Theme.find 'tulip'
+      formatter = Rouge::Formatters::Terminal256.new theme
+      lexer     = Rouge::Lexers::Ruby.new
+      tokens    = lexer.lex "1+1"
+      puts "\e[32mUsing Rouge\e[0m", formatter.format(tokens)
+    when 'pygments'
+      require 'open3'
+      out, err, status = Open3.capture3 'pygmentize', '-f', 'terminal256', '-O', 'style=fruity', '-l', 'ruby', stdin_data: '1+1'
+      raise [status, err.inspect] unless status.success?
+      raise err unless err.empty?
+      puts "\e[32mUsing pygments\e[0m", out
+    else
+      raise "What!? #{which.inspect}"
+    end
+  RUBY
+end
 
