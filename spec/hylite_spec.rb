@@ -3,11 +3,10 @@ require 'spec_helpers'
 require 'hylite'
 
 RSpec.describe 'hylite' do
-  describe 'choosing the highlighter' do
-    it 'uses rouge if available'
-    it 'uses pygmentize if rouge, isn\'t available'
-    it 'uses coderay if rouge and pygmentize aren\'t available'
-    it 'tells you how to install these other libs if none of them are available'
+  it 'invokes whichever hyliter "ChooseHyliter" returns', t:true do
+    expect(Hylite::ChooseHyliter).to receive(:call).with("to hylite", 'some lang').and_return(-> { "hylited" })
+    hylited = Hylite.new("to hylite", l: "some lang").call
+    expect(hylited).to eq "hylited"
   end
 
   it 'defaults the language to Ruby' do

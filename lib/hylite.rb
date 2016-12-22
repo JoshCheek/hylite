@@ -1,3 +1,5 @@
+require 'hylite/choose_hyliter'
+
 class Hylite
   def self.call(*args)
     new(*args).call
@@ -16,14 +18,17 @@ class Hylite
   end
 
   def call
-    require 'coderay'
     code = to_highlight
     code = code.read if code.respond_to? :read
-    CodeRay.encode(code, lang, :terminal)
+    hyliter(code, lang).call
   end
 
   private
 
   attr_accessor :to_highlight
   attr_writer   :lang
+
+  def hyliter(code, lang)
+    ChooseHyliter.call(code, lang)
+  end
 end

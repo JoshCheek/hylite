@@ -11,10 +11,9 @@ RSpec.describe 'binaries' do
       stdout, stderr, status = Open3.capture3 'hylite', stdin_data: '1+1'
       expect(stderr).to be_empty
       expect(status).to be_success
-      # Based on CodeRay's formatting of "1+1":
-      #                 ["\e[1;34m", "1", "\e[0m", "+", "\e[1;34m", "1", "\e[0m", "\n"]
-      expected_tokens = [:color,     "1", :color,  "+", :color,     "1", :color,  "\n"]
-      expect(highlighted_tokens stdout).to eq expected_tokens
+      tokens = highlighted_tokens(stdout)
+      expect(tokens).to include :color
+      expect(tokens.select { |t| t.kind_of? String }).to eq %W[1 + 1 \n]
     end
 
     context 'when it has an error' do
