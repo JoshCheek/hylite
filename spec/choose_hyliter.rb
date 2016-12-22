@@ -2,6 +2,8 @@ require 'hylite/choose_hyliter'
 require 'rouge'
 
 RSpec.describe 'ChooseHyliter' do
+  # ugh, might be better to inject require than this nonsense >.<
+
   it 'uses rouge if available' do
     hyliter = Hylite::ChooseHyliter.call("#a { color: #FFF; }" , "css")
     expect(hyliter.type).to eq :rouge
