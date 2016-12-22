@@ -17,7 +17,9 @@ class Hylite
       :rouge
     end
     def call
-      theme     = ::Rouge::Theme.find 'colorful'
+      # From Fish, you can see all styles with:
+      # for style in (rougify help style | tail -1 | tr -d ' ' | tr , \n); echo \n===== $style =====; rougify highlight -t $style -l ruby bin/hylite   ; end
+      theme     = ::Rouge::Theme.find 'monokai'
       formatter = ::Rouge::Formatters::Terminal256.new theme
       lexer     = ::Rouge::Lexer.find @lang
       tokens    = lexer.lex @code
@@ -30,10 +32,12 @@ class Hylite
       :pygments
     end
     def call
+      # From Fish, you can see all styles with:
+      # for style in (pygmentize -L styles | sed -n '/\*/s/[*: ]//gp'); echo \n===== $style =====; pygmentize -f terminal256 -O style=$style -l ruby < lib/hylite.rb ; end
       out, err, status = Open3.capture3(
         'pygmentize',
         '-f', 'terminal256',
-        '-O', 'style=fruity',
+        '-O', 'style=monokai',
         '-l', lang,
         stdin_data: code
       )
