@@ -2,8 +2,8 @@ require 'hylite'
 
 class Hylite
   class CLI
-    def initialize(code, argv)
-      self.code = code
+    def initialize(stdin, argv)
+      self.stdin = stdin
       self.argv = argv
     end
 
@@ -31,13 +31,13 @@ class Hylite
 
     private
 
-    attr_accessor :code, :argv
+    attr_accessor :stdin, :argv
 
     def ensure_evaluated
       return if @evaluated
       @evaluated = true
       @success   = true
-      @result    = Hylite.call(code.read, config)
+      @result    = Hylite.call(stdin, config)
     end
 
     def parse(args)
