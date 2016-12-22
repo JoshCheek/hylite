@@ -13,22 +13,24 @@ class Hylite
       end
     end
 
-    def self.rouge_available?
+    def rouge_available?
       require 'rouge'
-    ensure
-      return !$!
+      true
+    rescue LoadError
+      false
     end
 
-    def self.pygments_available?
+    def pygments_available?
       ENV['PATH'].split(File::PATH_SEPARATOR).any? do |dir|
         File.exist? File.join(dir, 'pygmentize')
       end
     end
 
     def coderay_available?
-      require 'coderay'
-    ensure
-      return !$!
+      require 'rouge'
+      true
+    rescue LoadError
+      false
     end
   end
 end
