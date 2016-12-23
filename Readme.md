@@ -6,17 +6,30 @@ Syntax Highlighting for scripters.
 It has a simple binary-interface and Ruby interface that tries to find a
 syntax highlighting tool on your machine and then highlight your code using that tool.
 
+The intent:
+
+1. Allow a script to find and use an existing syntax highlighter without needing
+   to add one as a dependency.
+2. All syntax highlighting that I've seen have stupidly difficult interfaces
+   (often buggy, difficult to discover, the obvious use case requires non-obvious
+   configuration which is difficult to discover and has mediocre defaults),
+   the intent here is to improve discoverability, have it do the obvious thing
+   by default, and choose reasonable defaults so that you rarely have to configure it.
+
 If you're not scripting, you'll want to use one of the libraries this tool wraps:
 
 * [Rouge](http://rouge.jneen.net)
 * [Coderay](http://coderay.rubychan.de)
 * [Pygments](http://pygments.org)
 
+
 Todo
 ----
 
+* Allow user to pass a filename as that's a pretty obvious way to use it,
+  and that's probably a nicer interface for non-Ruby projects.
 * Possibly allow it to guess the default (eg Rouge will do this)
-* Possibly allow user to pass a filename as it's probably a nicer interface for non-Ruby
+
 
 Interface
 ---------
