@@ -15,6 +15,9 @@ The intent:
    configuration which is difficult to discover and has mediocre defaults),
    the intent here is to improve discoverability, have it do the obvious thing
    by default, and choose reasonable defaults so that you rarely have to configure it.
+3. If you find ways that it doesn't do this, let me know. Eg I didn't test the
+   themes on a light background to make sure they look good there. That might make
+   the defaults only work well on dark backgrounds.
 
 If you're not scripting, you'll want to use one of the libraries this tool wraps:
 
