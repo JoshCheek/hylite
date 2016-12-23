@@ -1,2 +1,5 @@
 # don't commit the lock deps on gems, it should work for any versions that satisfy the Gemfile
 Gemfile.lock
+
+# don't commit the .gem file, it's big, binary, and can be generated
+*.gem
