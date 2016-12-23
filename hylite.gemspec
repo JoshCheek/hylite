@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/JoshCheek/hylite"
   s.summary     = %q{Syntax Highlighting for scripters}
   s.description = %q{Provides a simple binary interface and Ruby interface to highlight your code using whatever tools you already have on your machine.}
-  s.license     = "WTFL"
+  s.license     = "WTFPL"
 
   s.files         = `git ls-files`.split("\n") - Dir['mascots/*']
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
