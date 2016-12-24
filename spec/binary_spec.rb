@@ -98,8 +98,8 @@ RSpec.describe 'binaries' do
       expect(stdout).to_not be_empty
     end
 
-    specify 'highlight_syntax: warns you to use hylite, but still works' do
-      stdout, stderr, status = Open3.capture3 'highlight_syntax', stdin_data: '1+1'
+    specify 'hilight_syntax: warns you to use hylite, but still works' do
+      stdout, stderr, status = Open3.capture3 'hilight_syntax', stdin_data: '1+1'
       expect(stderr).to match /hylite/
       expect(status).to be_success
       expect(stdout).to_not be_empty
