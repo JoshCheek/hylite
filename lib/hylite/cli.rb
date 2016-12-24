@@ -7,10 +7,6 @@ class Hylite
       self.argv = argv
     end
 
-    def errors
-      config.errors
-    end
-
     def result
       ensure_evaluated
       @result
