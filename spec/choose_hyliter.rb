@@ -2,7 +2,9 @@ require 'hylite/choose_hyliter'
 require 'rouge'
 
 RSpec.describe 'ChooseHyliter' do
-  # ugh, might be better to inject require than this nonsense >.<
+  def unavailable!(klass)
+    allow(klass).to receive(:new?).and_return(nil)
+  end
 
   it 'uses rouge if available' do
     hyliter = Hylite::ChooseHyliter.call("#a { color: #FFF; }" , "css")
@@ -18,7 +20,7 @@ RSpec.describe 'ChooseHyliter' do
 
 
   it 'uses pygments if rouge, isn\'t available' do
-    allow(Hylite::ChooseHyliter).to receive(:require).with('rouge').and_raise(LoadError)
+    unavailable! Hylite::Rouge
 
     hyliter = Hylite::ChooseHyliter.call("#a { color: #FFF; }" , "css")
     expect(hyliter.type).to eq :pygments
@@ -30,10 +32,8 @@ RSpec.describe 'ChooseHyliter' do
 
 
   it 'uses coderay if rouge and pygmentize aren\'t available' do
-    require 'coderay'
-    allow(File).to receive(:exist?).and_return(false)
-    allow(Hylite::ChooseHyliter).to receive(:require).with('rouge').and_raise(LoadError)
-    allow(Hylite::ChooseHyliter).to receive(:require).with('coderay').and_return(true)
+    unavailable! Hylite::Rouge
+    unavailable! Hylite::Pygments
 
     hyliter = Hylite::ChooseHyliter.call("#a { color: #FFF; }" , "css")
     expect(hyliter.type).to eq :coderay
