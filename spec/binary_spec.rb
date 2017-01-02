@@ -45,6 +45,11 @@ RSpec.describe 'binaries' do
 
         assert_parses ['--help'], :help, true
         assert_parses ['--help'], :errors, []
+
+        code = Untouchable.new('code')
+        cli  = Hylite::CLI.new(code, ['-h'])
+        expect(cli).to be_success
+        expect(cli.result).to match /usage/i
       end
 
       describe 'language' do

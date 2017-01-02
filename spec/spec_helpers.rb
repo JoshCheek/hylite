@@ -6,6 +6,15 @@ module SpecHelpers
   end
 end
 
+class Untouchable < BasicObject
+  def initialize(name)
+    @nme = name
+  end
+  def method_missing(method_name, *)
+    ::Kernel.raise "#{@name} should not have been touched, but received #{method_name.inspect}"
+  end
+end
+
 RSpec.configure do |config|
   config.include SpecHelpers
   config.fail_fast = true

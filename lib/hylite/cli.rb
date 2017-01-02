@@ -2,17 +2,44 @@ require 'hylite'
 
 class Hylite
   class CLI
+    def help_screen
+      <<-HELP
+      Usage: echo '1+1' | hylite
+
+        Syntax Highlighting for Scripters.
+
+        Finds an existing syntax highlighting tool (rouge, coderay, pygments),
+        and uses that to highlight the code.
+
+      Options:
+        -h        This help screen
+        -l LANG   Set the language (defaults to Ruby)
+
+      Examples:
+        Set the language to JavaScript
+        $ echo 'function alphabet() { console.log("abc"); }' | hylite -l javascript
+
+        Add syntax highlighting to `cat`
+        $ cat lib/hylite.rb | hylite
+
+        Highlight sassy style sheets
+        $ cat app/assets/stylesheets/site.css.scss | hylite -l scss
+      HELP
+    end
+
     def initialize(stdin, argv)
       self.stdin = stdin
       self.argv = argv
     end
 
     def result
+      return help_screen if config[:help]
       ensure_evaluated
       @result
     end
 
     def success?
+      return true if config[:help]
       ensure_evaluated
       errors.none?
     end

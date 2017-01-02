@@ -3,7 +3,7 @@ require 'spec_helpers'
 require 'hylite'
 
 RSpec.describe 'hylite' do
-  it 'invokes whichever hyliter "ChooseHyliter" returns', t:true do
+  it 'invokes whichever hyliter "ChooseHyliter" returns' do
     expect(Hylite::ChooseHyliter).to receive(:call).with("to hylite", 'some lang').and_return(-> { "hylited" })
     hylited = Hylite.new("to hylite", l: "some lang").call
     expect(hylited).to eq "hylited"
